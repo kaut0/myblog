@@ -1,10 +1,13 @@
+"use client";
 import axios from "axios";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "flowbite-react";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState();
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
@@ -18,7 +21,15 @@ const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status == 401) {
+          return setError("Login Gagal Harap Coba Lagi");
+        }
+        setError("Login Gagal Harap Coba Lagi");
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setError();
+        }, 3000);
       });
   };
   const token = localStorage.getItem("token");
@@ -32,6 +43,11 @@ const Login = () => {
   }, []);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
+      {error && (
+        <Alert color="failure" onDismiss={() => setError()}>
+          <span className="font-medium">Info alert!</span> {error}.
+        </Alert>
+      )}
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
