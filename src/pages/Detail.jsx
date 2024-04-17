@@ -28,33 +28,37 @@ const Detail = () => {
     console.log("ini value", val.data);
     return (
       <React.Fragment>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-3xl mx-auto">
-            <div class="py-8">
-              <h1 class="text-3xl font-bold mb-2">{val.data.title}</h1>
-              <p class="text-gray-500 text-sm">
-                Published on <time>{val.data.created_at}</time>
-              </p>
+        <div className="flex flex-col self-center align-middle px-6 py-3 pb-6">
+          <div class="max-w-7xl mx-auto px-4 sm:px-3 lg:px-4">
+            <div class="max-w-3xl mx-auto">
+              <div class="py-4">
+                <div className=" flex flex-row items-center justify-between">
+                  <h1 class="text-3xl font-bold">{val.data.title}</h1>
+                  <div className="flex flex-row">
+                    <button
+                      className="mr-2"
+                      onClick={() => {
+                        navigate(`/update/${id}`);
+                      }}
+                    >
+                      edit
+                    </button>
+                    <button onClick={handleClick}>delete</button>
+                  </div>
+                </div>
+                <p class="text-gray-500 text-sm">
+                  Published on <time>{val.data.created_at}</time>
+                </p>
+              </div>
+              <img
+                src={val.data.image}
+                alt="Featured image"
+                class="w-full h-80 mb-8"
+              />
+              <div class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">
+                <p>{val.data.body}</p>
+              </div>
             </div>
-            <img
-              src={val.data.image}
-              alt="Featured image"
-              class="w-full h-auto mb-8"
-            />
-            <div class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">
-              <p>{val.data.body}</p>
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <button
-              className="mr-2 bg-cokelatKuning-900"
-              onClick={() => {
-                navigate(`/update/${id}`);
-              }}
-            >
-              edit
-            </button>
-            <button onClick={handleClick}>delete</button>
           </div>
         </div>
       </React.Fragment>
@@ -66,7 +70,7 @@ const Detail = () => {
       <div className="bg-gradient-to-r from-cokelatKuning-900 to-cokelatKuning-50">
         <NavbarComponent />
       </div>
-      <div className="blog-details">
+      <div>
         {isPending && <div>Loading...</div>}
         {error && <div>{error}</div>}
         {/* {blog && (
