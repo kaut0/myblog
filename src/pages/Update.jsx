@@ -21,10 +21,10 @@ const Update = () => {
   const token = localStorage.getItem("token");
   React.useMemo(() => {
     if (blog) {
-      setTitle(blog.title);
-      setBody(blog.body);
-      setAuthor(blog.category);
-      setImage(blog.image);
+      setTitle(blog.data.title);
+      setBody(blog.data.body);
+      setAuthor(blog.data.category);
+      setImage(blog.data.image);
     }
   }, []);
 
@@ -45,10 +45,10 @@ const Update = () => {
     e.preventDefault();
     const blogs = {
       id,
-      title: title !== "" ? title : blog.title,
-      body: body !== "" ? body : blog.body,
-      category: author !== "" ? author : blog.category,
-      image: image !== "" ? image : blog.image,
+      title: title !== "" ? title : blog.data.title,
+      body: body !== "" ? body : blog.data.body,
+      category: author !== "" ? author : blog.data.category,
+      image: image !== "" ? image : blog.data.image,
     };
     axios
       .post("http://localhost:8000/api/updateForums/", blogs, {
@@ -77,13 +77,13 @@ const Update = () => {
             <input
               type="text"
               required
-              value={title !== "" ? title : blog.title}
+              value={title !== "" ? title : blog.data.title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <label>Blog body:</label>
             <textarea
               required
-              value={body !== "" ? body : blog.body}
+              value={body !== "" ? body : blog.data.body}
               onChange={(e) => setBody(e.target.value)}
             ></textarea>
             <div>
@@ -97,13 +97,13 @@ const Update = () => {
                 }}
               />
             </div>
-            <label>Blog author:</label>
+            {/* <label>Blog author:</label>
             <input
               type="text"
               // required
-              value={author !== "" ? author : blog.category}
+              value={author !== "" ? author : blog.data.category}
               onChange={(e) => setAuthor(e.target.value)}
-            />
+            /> */}
             <button>Update Blog</button>
           </form>
         </div>

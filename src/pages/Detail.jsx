@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../network/useFetch";
 import { NavbarComponent } from "../component";
+import moment from "moment";
 
 const Detail = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const handleClick = () => {
-    fetch("http://localhost:8000/api/forums/" + blog.id, {
+    fetch("http://localhost:8000/api/forums/" + blog.data.id, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,
@@ -25,15 +26,17 @@ const Detail = () => {
   };
 
   const RenderData = (val) => {
-    console.log("ini value", val.data);
+    const forum = val.data.data;
+    const user = val.data.user;
+    const time = moment(forum.created_at).format("LL");
     return (
       <React.Fragment>
         <div className="flex flex-col self-center align-middle px-6 py-3 pb-6">
-          <div class="max-w-7xl mx-auto px-4 sm:px-3 lg:px-4">
-            <div class="max-w-3xl mx-auto">
-              <div class="py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-3 lg:px-4">
+            <div className="max-w-3xl mx-auto">
+              <div className="py-4">
                 <div className=" flex flex-row items-center justify-between">
-                  <h1 class="text-3xl font-bold">{val.data.title}</h1>
+                  <h1 className="text-3xl font-bold">{forum.title}</h1>
                   <div className="flex flex-row">
                     <button
                       className="mr-2"
@@ -46,17 +49,20 @@ const Detail = () => {
                     <button onClick={handleClick}>delete</button>
                   </div>
                 </div>
-                <p class="text-gray-500 text-sm">
-                  Published on <time>{val.data.created_at}</time>
+                <p className="text-gray-500 text-sm my-2">
+                  Published on <time>{time}</time>
+                </p>
+                <p className="text-gray-500 text-sm">
+                  Author by <time>{user.username}</time>
                 </p>
               </div>
               <img
-                src={val.data.image}
+                src={forum.image}
                 alt="Featured image"
-                class="w-full h-80 mb-8"
+                className="w-full h-80 mb-8"
               />
-              <div class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">
-                <p>{val.data.body}</p>
+              <div className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">
+                <p>{forum.body}</p>
               </div>
             </div>
           </div>
