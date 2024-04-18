@@ -80,7 +80,7 @@ export default function NavbarComponent() {
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={() => handleLogOut()}>
-                {"Iya, Yakin"}
+                <label className="text-white">{"Iya, Yakin"}</label>
               </Button>
               <Button color="gray" onClick={() => setOpenModal(false)}>
                 Tidak, batalkan
